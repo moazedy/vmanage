@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"vmanage/pkg/infra/tx"
 	"vmanage/pkg/module/vmanage/model/entity"
@@ -64,6 +65,9 @@ func (gr genericRepo[E]) GetByStringField(ctx context.Context, fieldName, fieldV
 	entityInstance := new(E)
 	err := gr.db.Where(fmt.Sprintf("%s = ?", fieldName), fieldValue).First(entityInstance).Error
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
 		return nil, err
 	}
 
