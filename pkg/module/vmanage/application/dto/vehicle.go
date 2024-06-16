@@ -22,6 +22,8 @@ func (cvr CreateVehicleRequest) Validate(ctx context.Context) errorx.ErrorX {
 	return errorx.NewBadRequestErrorX(validator.Validate(ctx, cvr))
 }
 
+func (cvr CreateVehicleRequest) IsDto() {}
+
 type CreateVehicleResponse struct {
 	Vehicle Vehicle `json:"vehicle"`
 }
@@ -36,6 +38,8 @@ type UpdateVehicleRequest struct {
 func (uvr UpdateVehicleRequest) Validate(ctx context.Context) errorx.ErrorX {
 	return errorx.NewBadRequestErrorX(validator.Validate(ctx, uvr))
 }
+
+func (uvr UpdateVehicleRequest) IsDto() {}
 
 // ----------------------------------------------------------
 
