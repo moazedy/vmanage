@@ -43,7 +43,6 @@ func (v vehicle) Delete(ctx *gin.Context) {
 	handleErrorx(ctx, errx)
 
 	ctx.JSON(http.StatusOK, nil)
-
 }
 
 func (v vehicle) GetByID(ctx *gin.Context) {
