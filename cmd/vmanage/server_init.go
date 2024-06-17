@@ -27,8 +27,10 @@ type serverItems struct {
 	// app layer
 	vehicleAppService appservice.Vehicle
 
-	// present layer
+	// presentation layer
 	vehiclePresentation presentation.Vehicle
+
+	oauthPresentation presentation.OAuth
 }
 
 func initServerItems(cfg config.Config) serverItems {
@@ -46,6 +48,8 @@ func initServerItems(cfg config.Config) serverItems {
 
 	// presentation layer
 	items.vehiclePresentation = rest.NewVehicle(items.vehicleAppService)
+
+	items.oauthPresentation = rest.NewOAuth()
 	return items
 }
 
