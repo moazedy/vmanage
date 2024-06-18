@@ -7,8 +7,7 @@ func run(address string, items serverItems) {
 	engine.GET("/auth/google/login", items.oauthPresentation.Login)
 	engine.GET("/auth/google/callback", items.oauthPresentation.Callback)
 
-	privateApisGroup := engine.Group("private")
-	privateApisGroup.Use(items.oauthPresentation.CheckLogin)
+	privateApisGroup := engine.Group("private", items.oauthPresentation.CheckLogin)
 	privateApisGroup.POST("/vehicles/vehicle", items.vehiclePresentation.Create)
 	privateApisGroup.PUT("/vehicles/vehicle", items.vehiclePresentation.Update)
 	privateApisGroup.DELETE("/vehicles/vehicle/:id", items.vehiclePresentation.Delete)
