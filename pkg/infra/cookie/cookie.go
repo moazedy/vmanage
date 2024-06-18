@@ -49,11 +49,14 @@ func LoginCheck(ctx *gin.Context, redirectPath string) (claims Claims) {
 	tokenString, err := ctx.Cookie("vmanage")
 	if err != nil {
 		fmt.Println(err)
-		if err == http.ErrNoCookie {
-			ctx.Redirect(http.StatusTemporaryRedirect, redirectPath)
-			return
-		}
-		ctx.AbortWithStatus(http.StatusInternalServerError)
+		// NOTE : this part is for real oauth provider case :
+		/*
+			if err == http.ErrNoCookie {
+				ctx.Redirect(http.StatusTemporaryRedirect, redirectPath)
+				return
+			}
+		*/
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
