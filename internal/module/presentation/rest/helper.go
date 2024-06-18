@@ -16,7 +16,7 @@ import (
 
 func readRequest[Dto dto.Dto](ctx *gin.Context) (dto Dto) {
 	dtoPtr := new(Dto)
-	err := ctx.BindJSON(dto)
+	err := ctx.BindJSON(dtoPtr)
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, errors.New("missmatched type"))
 		return
@@ -29,7 +29,8 @@ func handleErrorx(ctx *gin.Context, errx errorx.ErrorX) {
 	if errx.IsNil() {
 		return
 	} else {
-		ctx.AbortWithError(errx.HttpStatusCode, errx.EmbedError)
+		ctx.AbortWithStatusJSON(errx.HttpStatusCode, gin.H{"error": errx.EmbedError.Error()})
+		return
 	}
 }
 
