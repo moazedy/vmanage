@@ -27,8 +27,10 @@ type serverItems struct {
 	// app layer
 	vehicleAppService appservice.Vehicle
 
-	// present layer
+	// presentation layer
 	vehiclePresentation presentation.Vehicle
+
+	oauthPresentation presentation.OAuth
 }
 
 func initServerItems(cfg config.Config) serverItems {
@@ -46,9 +48,12 @@ func initServerItems(cfg config.Config) serverItems {
 
 	// presentation layer
 	items.vehiclePresentation = rest.NewVehicle(items.vehicleAppService)
+
+	items.oauthPresentation = rest.NewOAuth()
 	return items
 }
 
+// initiating server requirements and start
 func startServer() {
 	cfg := config.Init()
 
@@ -57,6 +62,7 @@ func startServer() {
 	run(cfg.Server.Address+":"+cfg.Server.Port, serverItems)
 }
 
+// opening connection with database
 func initDB(cfg config.PostgresConfig) *gorm.DB {
 	db, err := gorm.Open(postgres.Open(cfg.ToString()), &gorm.Config{})
 	if err != nil {
