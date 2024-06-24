@@ -1,11 +1,11 @@
 Server:
-  Address: "localhost"
+  Address: "0.0.0.0"
   Port: "4853"
 
 Postgres:
-  Host: "localhost"
+  Host: "postgres"
   Port: "5432"
   Username: "postgres"
   Password: "postgresPass"
   Name: "vmanage"
-  Driver: "vmanage"
+  Driver: "postgres"

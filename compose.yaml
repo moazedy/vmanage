@@ -1,0 +1,28 @@
+services:
+  vmanage:
+    build: .
+    restart: always 
+    ports:
+      - "4853:4853"
+    depends_on: 
+      - postgres
+
+    networks:
+      - vnet
+
+  postgres:
+    image: "postgres:14-alpine"
+    restart: always 
+    environment:
+      - POSTGRES_PASSWORD=postgresPass
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=vmanage
+    ports:
+      - "5432:5432"
+    volumes:
+       - ~/apps/postgres:/var/lib/postgresql/data
+    networks:
+      - vnet
+
+networks:
+  vnet:
